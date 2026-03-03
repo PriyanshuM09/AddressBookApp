@@ -1,0 +1,19 @@
+/.metadata/
+# Maven
+target/
+
+# Eclipse / STS
+.settings/
+.project
+.classpath
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.iml
