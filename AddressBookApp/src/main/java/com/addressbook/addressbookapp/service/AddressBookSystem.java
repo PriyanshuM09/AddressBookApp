@@ -11,7 +11,10 @@ public class AddressBookSystem {
 
     private Map<String, AddressBook> addressBooks = new HashMap<>();
 
-    // UC6 → Add new Address Book
+    private Map<String, List<Contact>> cityDictionary = new HashMap<>();
+    private Map<String, List<Contact>> stateDictionary = new HashMap<>();
+
+    // UC6 → Add AddressBook
     public void addAddressBook(String name) {
 
         if (addressBooks.containsKey(name)) {
@@ -23,12 +26,11 @@ public class AddressBookSystem {
         System.out.println("Address Book '" + name + "' created successfully.");
     }
 
-    // UC6 → Get AddressBook
     public AddressBook getAddressBook(String name) {
         return addressBooks.get(name);
     }
 
-    // UC8 → Search Person by City across all AddressBooks
+    // UC8 → Search by City
     public List<Contact> searchByCity(String city) {
 
         List<Contact> result = new ArrayList<>();
@@ -44,7 +46,7 @@ public class AddressBookSystem {
         return result;
     }
 
-    // UC8 → Search Person by State across all AddressBooks
+    // UC8 → Search by State
     public List<Contact> searchByState(String state) {
 
         List<Contact> result = new ArrayList<>();
@@ -60,7 +62,49 @@ public class AddressBookSystem {
         return result;
     }
 
-    // Display all AddressBooks
+    // UC9 → Add contact to city/state dictionary
+    public void addToDictionary(Contact contact) {
+
+        cityDictionary
+            .computeIfAbsent(contact.getCity(), k -> new ArrayList<>())
+            .add(contact);
+
+        stateDictionary
+            .computeIfAbsent(contact.getState(), k -> new ArrayList<>())
+            .add(contact);
+    }
+
+    // UC9 → View persons by city
+    public void viewPersonsByCity(String city) {
+
+        List<Contact> list = cityDictionary.get(city);
+
+        if (list == null || list.isEmpty()) {
+            System.out.println("No contacts found in city: " + city);
+            return;
+        }
+
+        System.out.println("Contacts in city: " + city);
+
+        list.forEach(System.out::println);
+    }
+
+    // UC9 → View persons by state
+    public void viewPersonsByState(String state) {
+
+        List<Contact> list = stateDictionary.get(state);
+
+        if (list == null || list.isEmpty()) {
+            System.out.println("No contacts found in state: " + state);
+            return;
+        }
+
+        System.out.println("Contacts in state: " + state);
+
+        list.forEach(System.out::println);
+    }
+
+    // Display AddressBooks
     public void displayAddressBooks() {
 
         if (addressBooks.isEmpty()) {
@@ -70,8 +114,6 @@ public class AddressBookSystem {
 
         System.out.println("Available Address Books:");
 
-        for (String name : addressBooks.keySet()) {
-            System.out.println(name);
-        }
+        addressBooks.keySet().forEach(System.out::println);
     }
 }

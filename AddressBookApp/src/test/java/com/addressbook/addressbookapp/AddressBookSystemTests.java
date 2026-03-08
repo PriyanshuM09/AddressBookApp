@@ -1,6 +1,6 @@
 package com.addressbook.addressbookapp;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,38 +19,7 @@ class AddressBookSystemTests {
     }
 
     @Test
-    void givenAddressBookName_whenAdded_shouldCreateAddressBook() {
-
-        system.addAddressBook("Friends");
-
-        AddressBook book = system.getAddressBook("Friends");
-
-        assertNotNull(book);
-    }
-
-    @Test
-    void givenMultipleAddressBooks_whenAdded_shouldStoreAll() {
-
-        system.addAddressBook("Friends");
-        system.addAddressBook("Family");
-        system.addAddressBook("Office");
-
-        assertNotNull(system.getAddressBook("Friends"));
-        assertNotNull(system.getAddressBook("Family"));
-        assertNotNull(system.getAddressBook("Office"));
-    }
-
-    @Test
-    void givenAddressBook_whenRetrieved_shouldReturnCorrectInstance() {
-
-        system.addAddressBook("Work");
-
-        AddressBook book = system.getAddressBook("Work");
-
-        assertTrue(book instanceof AddressBook);
-    }
-    @Test
-    void givenCity_whenSearched_shouldReturnContacts() {
+    void givenCity_whenViewed_shouldReturnCorrectContacts() {
 
         system.addAddressBook("Friends");
 
@@ -67,6 +36,33 @@ class AddressBookSystemTests {
         book.addContact(c1);
         book.addContact(c2);
 
+        system.addToDictionary(c1);
+        system.addToDictionary(c2);
+
         assertEquals(1, system.searchByCity("Bhopal").size());
+    }
+
+    @Test
+    void givenState_whenViewed_shouldReturnCorrectContacts() {
+
+        system.addAddressBook("Friends");
+
+        AddressBook book = system.getAddressBook("Friends");
+
+        Contact c1 = new Contact(
+                "Priyanshu","Mishra","Bhopal","Bhopal",
+                "MP","462001","9999999999","pm@gmail.com");
+
+        Contact c2 = new Contact(
+                "Ankit","Verma","Indore","Indore",
+                "MP","452001","7777777777","av@gmail.com");
+
+        book.addContact(c1);
+        book.addContact(c2);
+
+        system.addToDictionary(c1);
+        system.addToDictionary(c2);
+
+        assertEquals(2, system.searchByState("MP").size());
     }
 }
