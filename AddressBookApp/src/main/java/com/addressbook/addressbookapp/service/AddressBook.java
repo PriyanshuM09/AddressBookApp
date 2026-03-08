@@ -2,6 +2,11 @@ package com.addressbook.addressbookapp.service;
 
 import com.addressbook.addressbookapp.model.Contact;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.FileReader;
@@ -137,6 +142,36 @@ public class AddressBook {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void writeContactsToJSON(String filePath) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+
+            gson.toJson(contacts, writer);
+
+            System.out.println("Contacts written to JSON successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void readContactsFromJSON(String filePath) {
+
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader(filePath)) {
+
+            Contact[] contactArray = gson.fromJson(reader, Contact[].class);
+
+            for (Contact contact : contactArray) {
+                System.out.println(contact);
+            }
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

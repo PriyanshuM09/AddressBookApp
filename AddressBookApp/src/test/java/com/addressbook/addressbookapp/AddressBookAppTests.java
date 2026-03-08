@@ -155,5 +155,18 @@ class AddressBookAppTests {
 
         assertEquals("Ankit", sorted.get(0).getFirstName());
     }
+    @Test
+    void givenContacts_whenWrittenToJSON_shouldCreateJSONFile() {
+
+        Contact contact = new Contact(
+                "Priyanshu","Mishra","Bhopal","Bhopal",
+                "MP","462001","9999999999","pm@gmail.com");
+
+        addressBook.addContact(contact);
+
+        addressBook.writeContactsToJSON("contacts.json");
+
+        assertEquals(1, addressBook.getContacts().size());
+    }
     
 }
