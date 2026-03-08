@@ -1,7 +1,7 @@
 package com.addressbook.addressbookapp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -174,6 +174,15 @@ class AddressBookAppTests {
         addressBook.writeContactsToJSON("contacts.json");
 
         assertEquals(1, addressBook.getContacts().size());
+    }
+    @Test
+    void givenContact_whenUpdated_shouldSyncWithDatabase() {
+
+        boolean updated =
+                addressBook.updateContactEmail("Priyanshu",
+                                               "updated@gmail.com");
+
+        assertTrue(updated);
     }
     
 }

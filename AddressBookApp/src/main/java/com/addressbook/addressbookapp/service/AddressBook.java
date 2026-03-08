@@ -3,6 +3,8 @@ package com.addressbook.addressbookapp.service;
 import com.addressbook.addressbookapp.model.Contact;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import com.google.gson.Gson;
@@ -245,6 +247,26 @@ public class AddressBook {
         }
 
         System.out.println("Contact not found.");
+    }
+    public boolean updateContactEmail(String firstName, String newEmail) {
+
+        String query = "UPDATE contacts SET email = ? WHERE firstName = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, newEmail);
+            stmt.setString(2, firstName);
+
+            int rows = stmt.executeUpdate();
+
+            return rows > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     // UC4 → Delete Contact
