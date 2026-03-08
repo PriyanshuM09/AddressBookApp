@@ -2,6 +2,9 @@ package com.addressbook.addressbookapp.service;
 
 import com.addressbook.addressbookapp.model.Contact;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileReader;
@@ -125,6 +128,38 @@ public class AddressBook {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public List<Contact> getContactsFromDB() {
+
+        List<Contact> list = new ArrayList<>();
+
+        String query = "SELECT * FROM contacts";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+
+                Contact contact = new Contact(
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getString("zip"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("email")
+                );
+
+                list.add(contact);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
     public void readContactsFromCSV(String filePath) {
 

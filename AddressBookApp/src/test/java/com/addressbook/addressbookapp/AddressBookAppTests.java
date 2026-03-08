@@ -3,7 +3,7 @@ package com.addressbook.addressbookapp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +58,13 @@ class AddressBookAppTests {
         List<Contact> sorted = addressBook.sortByCity();
 
         assertEquals("Bhopal", sorted.get(0).getCity());
+    }
+    @Test
+    void givenContacts_whenRetrievedFromDB_shouldReturnContacts() {
+
+        List<Contact> contacts = addressBook.getContactsFromDB();
+
+        assertNotNull(contacts);
     }
     @Test
     void givenContacts_whenWrittenToFile_shouldCreateFile() {
