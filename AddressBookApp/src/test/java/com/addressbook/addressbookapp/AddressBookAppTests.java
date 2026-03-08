@@ -73,6 +73,19 @@ class AddressBookAppTests {
         assertEquals(1, addressBook.getContacts().size());
     }
     @Test
+    void givenContacts_whenWrittenToCSV_shouldCreateCSVFile() {
+
+        Contact contact = new Contact(
+                "Priyanshu","Mishra","Bhopal","Bhopal",
+                "MP","462001","9999999999","pm@gmail.com");
+
+        addressBook.addContact(contact);
+
+        addressBook.writeContactsToCSV("contacts.csv");
+
+        assertEquals(1, addressBook.getContacts().size());
+    }
+    @Test
     void givenContact_whenDeleted_shouldRemoveContact() {
 
         Contact contact = new Contact(

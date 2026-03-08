@@ -2,6 +2,11 @@ package com.addressbook.addressbookapp.service;
 
 import com.addressbook.addressbookapp.model.Contact;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -81,6 +86,58 @@ public class AddressBook {
 
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+    public void writeContactsToCSV(String filePath) {
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
+
+            String[] header = {
+                    "FirstName","LastName","Address",
+                    "City","State","Zip","Phone","Email"
+            };
+
+            writer.writeNext(header);
+
+            for (Contact contact : contacts) {
+
+                String[] data = {
+                        contact.getFirstName(),
+                        contact.getLastName(),
+                        contact.getAddress(),
+                        contact.getCity(),
+                        contact.getState(),
+                        contact.getZip(),
+                        contact.getPhoneNumber(),
+                        contact.getEmail()
+                };
+
+                writer.writeNext(data);
+            }
+
+            System.out.println("Contacts written to CSV successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void readContactsFromCSV(String filePath) {
+
+        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+
+            String[] line;
+
+            while ((line = reader.readNext()) != null) {
+
+                for (String value : line) {
+                    System.out.print(value + " ");
+                }
+
+                System.out.println();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
