@@ -74,6 +74,13 @@ public class AddressBook {
 
         System.out.println("Contact not found.");
     }
+    public List<Contact> sortContactsByName() {
+
+        return contacts.stream()
+                .sorted((c1, c2) -> 
+                    c1.getFirstName().compareToIgnoreCase(c2.getFirstName()))
+                .toList();
+    }
 
     // UC4 → Delete Contact
     public void deleteContact(String firstName) {

@@ -2,6 +2,8 @@ package com.addressbook.addressbookapp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,6 +83,29 @@ class AddressBookAppTests {
         addressBook.addContact(c2);
 
         assertEquals(1, addressBook.getContacts().size());
+    }
+    @Test
+    void givenContacts_whenSortedByName_shouldReturnAlphabeticalOrder() {
+
+        Contact c1 = new Contact(
+                "Rahul","Sharma","Delhi","Delhi",
+                "DL","110001","8888888888","rs@gmail.com");
+
+        Contact c2 = new Contact(
+                "Priyanshu","Mishra","Bhopal","Bhopal",
+                "MP","462001","9999999999","pm@gmail.com");
+
+        Contact c3 = new Contact(
+                "Ankit","Verma","Indore","Indore",
+                "MP","452001","7777777777","av@gmail.com");
+
+        addressBook.addContact(c1);
+        addressBook.addContact(c2);
+        addressBook.addContact(c3);
+
+        List<Contact> sorted = addressBook.sortContactsByName();
+
+        assertEquals("Ankit", sorted.get(0).getFirstName());
     }
     
 }
