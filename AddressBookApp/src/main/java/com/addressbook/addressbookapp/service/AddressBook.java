@@ -11,8 +11,17 @@ public class AddressBook {
 
     Scanner scanner = new Scanner(System.in);
 
-    // UC2 → Add Contact
     public void addContact(Contact contact) {
+
+        boolean duplicate = contacts.stream()
+                .anyMatch(c -> c.getFirstName()
+                .equalsIgnoreCase(contact.getFirstName()));
+
+        if (duplicate) {
+            System.out.println("Duplicate contact not allowed.");
+            return;
+        }
+
         contacts.add(contact);
         System.out.println("Contact added successfully!");
     }

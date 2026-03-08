@@ -54,4 +54,32 @@ class AddressBookAppTests {
 
         assertEquals(0, addressBook.getContacts().size());
     }
+    @Test
+    void givenDuplicateContact_whenAdded_shouldNotIncreaseListSize() {
+
+        Contact c1 = new Contact(
+                "Priyanshu",
+                "Mishra",
+                "Bhopal",
+                "Bhopal",
+                "MP",
+                "462001",
+                "9999999999",
+                "pm@gmail.com");
+
+        Contact c2 = new Contact(
+                "Priyanshu",
+                "Mishra",
+                "Bhopal",
+                "Bhopal",
+                "MP",
+                "462001",
+                "9999999999",
+                "pm@gmail.com");
+
+        addressBook.addContact(c1);
+        addressBook.addContact(c2);
+
+        assertEquals(1, addressBook.getContacts().size());
+    }
 }
