@@ -1,74 +1,102 @@
 package com.addressbook.addressbookapp;
 
+import java.util.Scanner;
+
 import com.addressbook.addressbookapp.model.Contact;
 import com.addressbook.addressbookapp.service.AddressBook;
-import java.util.Scanner;
 
 public class AddressBookMain {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        System.out.println("Welcome to Address Book");
+		Scanner scanner = new Scanner(System.in);
+		AddressBook addressBook = new AddressBook();
 
-        Scanner scanner = new Scanner(System.in);
-        AddressBook addressBook = new AddressBook();
+		boolean running = true;
 
-        // Create Contact (UC2)
-        System.out.println("Enter First Name:");
-        String firstName = scanner.nextLine();
+		while (running) {
 
-        System.out.println("Enter Last Name:");
-        String lastName = scanner.nextLine();
+			System.out.println("\n===== Address Book Menu =====");
+			System.out.println("1. Add Contact");
+			System.out.println("2. Edit Contact");
+			System.out.println("3. Delete Contact");
+			System.out.println("4. Display Contacts");
+			System.out.println("5. Exit");
 
-        System.out.println("Enter Address:");
-        String address = scanner.nextLine();
+			System.out.print("Enter your choice: ");
+			int choice = scanner.nextInt();
+			scanner.nextLine();
 
-        System.out.println("Enter City:");
-        String city = scanner.nextLine();
+			switch (choice) {
 
-        System.out.println("Enter State:");
-        String state = scanner.nextLine();
+			case 1:
 
-        System.out.println("Enter Zip:");
-        String zip = scanner.nextLine();
+				System.out.println("Enter First Name:");
+				String firstName = scanner.nextLine();
 
-        System.out.println("Enter Phone Number:");
-        String phone = scanner.nextLine();
+				System.out.println("Enter Last Name:");
+				String lastName = scanner.nextLine();
 
-        System.out.println("Enter Email:");
-        String email = scanner.nextLine();
+				System.out.println("Enter Address:");
+				String address = scanner.nextLine();
 
-        Contact contact = new Contact(
-                firstName,
-                lastName,
-                address,
-                city,
-                state,
-                zip,
-                phone,
-                email
-        );
+				System.out.println("Enter City:");
+				String city = scanner.nextLine();
 
-        addressBook.addContact(contact);
+				System.out.println("Enter State:");
+				String state = scanner.nextLine();
 
-        System.out.println("\nContacts List:");
-        addressBook.displayContacts();
+				System.out.println("Enter Zip:");
+				String zip = scanner.nextLine();
 
-        // UC3 → Edit Contact
-        System.out.println("\nEnter first name of contact to edit:");
-        String nameToEdit = scanner.nextLine();
+				System.out.println("Enter Phone Number:");
+				String phone = scanner.nextLine();
 
-        addressBook.editContact(nameToEdit);
+				System.out.println("Enter Email:");
+				String email = scanner.nextLine();
 
-        System.out.println("\nUpdated Contacts:");
-        addressBook.displayContacts();
-        
-        System.out.println("\nEnter first name of contact to delete:");
-        String nameToDelete = scanner.nextLine();
+				Contact contact = new Contact(firstName, lastName, address, city, state, zip, phone, email);
 
-        addressBook.deleteContact(nameToDelete);
+				addressBook.addContact(contact);
 
-        System.out.println("\nUpdated Contacts:");
-        addressBook.displayContacts();
-    }
+				break;
+
+			case 2:
+
+				System.out.println("Enter first name to edit:");
+				String nameToEdit = scanner.nextLine();
+
+				addressBook.editContact(nameToEdit);
+
+				break;
+
+			case 3:
+
+				System.out.println("Enter first name to delete:");
+				String nameToDelete = scanner.nextLine();
+
+				addressBook.deleteContact(nameToDelete);
+
+				break;
+
+			case 4:
+
+				addressBook.displayContacts();
+
+				break;
+
+			case 5:
+
+				running = false;
+				System.out.println("Exiting Address Book...");
+				break;
+
+			default:
+
+				System.out.println("Invalid choice!");
+			}
+		}
+
+		scanner.close();
+	}
 }

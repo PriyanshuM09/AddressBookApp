@@ -65,17 +65,24 @@ public class AddressBook {
 
         System.out.println("Contact not found.");
     }
+
+    // UC4 → Delete Contact
     public void deleteContact(String firstName) {
 
         for (Contact contact : contacts) {
 
             if (contact.getFirstName().equalsIgnoreCase(firstName)) {
-                contacts.remove(contact);
+            	contacts.removeIf(c -> c.getFirstName().equalsIgnoreCase(firstName));
                 System.out.println("Contact deleted successfully!");
                 return;
             }
         }
 
         System.out.println("Contact not found.");
+    }
+
+    // Needed for JUnit Testing
+    public List<Contact> getContacts() {
+        return contacts;
     }
 }

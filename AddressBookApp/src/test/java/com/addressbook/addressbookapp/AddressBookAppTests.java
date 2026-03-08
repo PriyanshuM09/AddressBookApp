@@ -1,12 +1,57 @@
 package com.addressbook.addressbookapp;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.addressbook.addressbookapp.model.Contact;
+import com.addressbook.addressbookapp.service.AddressBook;
+
 class AddressBookAppTests {
 
-	@Test
-	void contextLoads() {
-	}
+    AddressBook addressBook;
 
+    @BeforeEach
+    void setUp() {
+        addressBook = new AddressBook();
+    }
+
+    @Test
+    void givenContact_whenAdded_shouldIncreaseListSize() {
+
+        Contact contact = new Contact(
+                "Priyanshu",
+                "Mishra",
+                "Bhopal",
+                "Bhopal",
+                "MP",
+                "462001",
+                "9999999999",
+                "pm@gmail.com");
+
+        addressBook.addContact(contact);
+
+        assertEquals(1, addressBook.getContacts().size());
+    }
+
+    @Test
+    void givenContact_whenDeleted_shouldRemoveContact() {
+
+        Contact contact = new Contact(
+                "Priyanshu",
+                "Mishra",
+                "Bhopal",
+                "Bhopal",
+                "MP",
+                "462001",
+                "9999999999",
+                "pm@gmail.com");
+
+        addressBook.addContact(contact);
+
+        addressBook.deleteContact("Priyanshu");
+
+        assertEquals(0, addressBook.getContacts().size());
+    }
 }
