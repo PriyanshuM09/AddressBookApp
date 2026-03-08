@@ -62,5 +62,13 @@ public class AddressBookMain {
 
         System.out.println("\nUpdated Contacts:");
         addressBook.displayContacts();
+        
+        System.out.println("\nEnter first name of contact to delete:");
+        String nameToDelete = scanner.nextLine();
+
+        addressBook.deleteContact(nameToDelete);
+
+        System.out.println("\nUpdated Contacts:");
+        addressBook.displayContacts();
     }
 }
