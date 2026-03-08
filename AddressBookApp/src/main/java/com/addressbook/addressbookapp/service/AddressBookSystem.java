@@ -103,7 +103,39 @@ public class AddressBookSystem {
 
         list.forEach(System.out::println);
     }
+    public Map<String, Long> countByCity() {
 
+        Map<String, Long> cityCount = new HashMap<>();
+
+        for (AddressBook book : addressBooks.values()) {
+
+            book.getContacts()
+                .stream()
+                .forEach(contact -> cityCount.merge(
+                        contact.getCity(), 
+                        1L, 
+                        Long::sum));
+        }
+
+        return cityCount;
+    }
+
+    public Map<String, Long> countByState() {
+
+        Map<String, Long> stateCount = new HashMap<>();
+
+        for (AddressBook book : addressBooks.values()) {
+
+            book.getContacts()
+                .stream()
+                .forEach(contact -> stateCount.merge(
+                        contact.getState(), 
+                        1L, 
+                        Long::sum));
+        }
+
+        return stateCount;
+    }
     // Display AddressBooks
     public void displayAddressBooks() {
 

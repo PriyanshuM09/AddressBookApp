@@ -65,4 +65,29 @@ class AddressBookSystemTests {
 
         assertEquals(2, system.searchByState("MP").size());
     }
+    @Test
+    void givenContacts_whenCountedByCity_shouldReturnCorrectCount() {
+
+        system.addAddressBook("Friends");
+
+        AddressBook book = system.getAddressBook("Friends");
+
+        Contact c1 = new Contact(
+                "Priyanshu","Mishra","Bhopal","Bhopal",
+                "MP","462001","9999999999","pm@gmail.com");
+
+        Contact c2 = new Contact(
+                "Rahul","Sharma","Delhi","Delhi",
+                "DL","110001","8888888888","rs@gmail.com");
+
+        Contact c3 = new Contact(
+                "Ankit","Verma","Bhopal","Bhopal",
+                "MP","462001","7777777777","av@gmail.com");
+
+        book.addContact(c1);
+        book.addContact(c2);
+        book.addContact(c3);
+
+        assertEquals(2, system.countByCity().get("Bhopal"));
+    }
 }
