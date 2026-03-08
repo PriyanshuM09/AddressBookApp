@@ -1,6 +1,7 @@
 package com.addressbook.addressbookapp.service;
 
 import com.addressbook.addressbookapp.model.Contact;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ public class AddressBook {
 
     Scanner scanner = new Scanner(System.in);
 
+    // UC2 → Add Contact (with duplicate check UC7)
     public void addContact(Contact contact) {
 
         boolean duplicate = contacts.stream()
@@ -74,30 +76,57 @@ public class AddressBook {
 
         System.out.println("Contact not found.");
     }
-    public List<Contact> sortContactsByName() {
-
-        return contacts.stream()
-                .sorted((c1, c2) -> 
-                    c1.getFirstName().compareToIgnoreCase(c2.getFirstName()))
-                .toList();
-    }
 
     // UC4 → Delete Contact
     public void deleteContact(String firstName) {
 
-        for (Contact contact : contacts) {
+        boolean removed = contacts.removeIf(contact ->
+                contact.getFirstName().equalsIgnoreCase(firstName));
 
-            if (contact.getFirstName().equalsIgnoreCase(firstName)) {
-            	contacts.removeIf(c -> c.getFirstName().equalsIgnoreCase(firstName));
-                System.out.println("Contact deleted successfully!");
-                return;
-            }
+        if (removed) {
+            System.out.println("Contact deleted successfully!");
+        } else {
+            System.out.println("Contact not found.");
         }
-
-        System.out.println("Contact not found.");
     }
 
-    // Needed for JUnit Testing
+    // UC11 → Sort by Name
+    public List<Contact> sortContactsByName() {
+
+        return contacts.stream()
+                .sorted((c1, c2) ->
+                        c1.getFirstName().compareToIgnoreCase(c2.getFirstName()))
+                .toList();
+    }
+
+    // UC12 → Sort by City
+    public List<Contact> sortByCity() {
+
+        return contacts.stream()
+                .sorted((c1, c2) ->
+                        c1.getCity().compareToIgnoreCase(c2.getCity()))
+                .toList();
+    }
+
+    // UC12 → Sort by State
+    public List<Contact> sortByState() {
+
+        return contacts.stream()
+                .sorted((c1, c2) ->
+                        c1.getState().compareToIgnoreCase(c2.getState()))
+                .toList();
+    }
+
+    // UC12 → Sort by Zip
+    public List<Contact> sortByZip() {
+
+        return contacts.stream()
+                .sorted((c1, c2) ->
+                        c1.getZip().compareToIgnoreCase(c2.getZip()))
+                .toList();
+    }
+
+    // Getter for JUnit Testing
     public List<Contact> getContacts() {
         return contacts;
     }
