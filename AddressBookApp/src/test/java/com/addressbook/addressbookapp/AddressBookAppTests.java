@@ -60,6 +60,19 @@ class AddressBookAppTests {
         assertEquals("Bhopal", sorted.get(0).getCity());
     }
     @Test
+    void givenContacts_whenWrittenToFile_shouldCreateFile() {
+
+        Contact contact = new Contact(
+                "Priyanshu","Mishra","Bhopal","Bhopal",
+                "MP","462001","9999999999","pm@gmail.com");
+
+        addressBook.addContact(contact);
+
+        addressBook.writeContactsToFile("contacts.txt");
+
+        assertEquals(1, addressBook.getContacts().size());
+    }
+    @Test
     void givenContact_whenDeleted_shouldRemoveContact() {
 
         Contact contact = new Contact(

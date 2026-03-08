@@ -2,6 +2,11 @@ package com.addressbook.addressbookapp.service;
 
 import com.addressbook.addressbookapp.model.Contact;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,6 +43,44 @@ public class AddressBook {
 
         for (Contact contact : contacts) {
             System.out.println(contact);
+        }
+    }
+    public void writeContactsToFile(String filePath) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+
+            for (Contact contact : contacts) {
+
+                writer.write(contact.getFirstName() + " "
+                        + contact.getLastName() + " "
+                        + contact.getAddress() + " "
+                        + contact.getCity() + " "
+                        + contact.getState() + " "
+                        + contact.getZip() + " "
+                        + contact.getPhoneNumber() + " "
+                        + contact.getEmail());
+
+                writer.newLine();
+            }
+
+            System.out.println("Contacts written to file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Error writing file: " + e.getMessage());
+        }
+    }
+    public void readContactsFromFile(String filePath) {
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
         }
     }
 
